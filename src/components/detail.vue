@@ -50,12 +50,33 @@ export default {
           //  console.log('detail.vue:',it)
         });
     },
-    getTime(time) {
-      let date = new Date(time);
-      let y = date.getFullYear(); // 获取完整的年份(4位,1970)
-      let m = date.getMonth(); // 获取月份(0-11,0代表1月,用的时候记得加上1)
-      let d = date.getDate(); // 获取日(1-31)
-      return `${y}-${m}-${d}`;
+    getDateTimeStamp: function (dateStr){
+      return Date.parse(dateStr.replace(/-/gi,"/").replace(/[A-Z]+/gi," "));
+    },
+    getTime: function(hisTime, nowTime) {
+      var now = nowTime ? nowTime : new Date().getTime(),
+        diffValue = now - this.getDateTimeStamp(hisTime),
+        result = "",
+        minute = 1000 * 60,
+        hour = minute * 60,
+        day = hour * 24,
+        halfamonth = day * 15,
+        month = day * 30,
+        year = month * 12,
+        _year = diffValue / year,
+        _month = diffValue / month,
+        _week = diffValue / (7 * day),
+        _day = diffValue / day,
+        _hour = diffValue / hour,
+        _min = diffValue / minute;
+      if (_year >= 1) result = parseInt(_year) + "年前";
+      else if (_month >= 1) result = parseInt(_month) + "个月前";
+      else if (_week >= 1) result = parseInt(_week) + "周前";
+      else if (_day >= 1) result = parseInt(_day) + "天前";
+      else if (_hour >= 1) result = parseInt(_hour) + "个小时前";
+      else if (_min >= 1) result = parseInt(_min) + "分钟前";
+      else result = "刚刚";
+      return result;
     }
   },
   created() {
