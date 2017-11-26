@@ -32,8 +32,7 @@ export default {
 
 <style scoped>
 .reply {
-  width: 960px;
-  margin: 30px auto;
+  margin-top: 30px;
   background: #fff;
   border-radius: 4px;
 }

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <v-header></v-header>
-    <router-view name='main'></router-view>
+     <div class="main">
+       <router-view name='main'></router-view>
+     </div>
     <v-footer></v-footer>
   </div>
 </template>
@@ -29,5 +31,9 @@ export default {
 img {
   height: auto;
   vertical-align: top;
+}
+.main {
+  width: 1100px;
+  margin: 0 auto;
 }
 </style>

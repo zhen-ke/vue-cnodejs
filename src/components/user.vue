@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div class="user" v-if="user.length !== 0">
     <div class="user-info">
       <div class="user-info-hd">个人用户信息</div>
       <div class="user-info-bd">
@@ -41,6 +41,7 @@
 
 <script>
 export default {
+  props: ['userdata'],
   data: function() {
     return {
       user: []
@@ -49,7 +50,7 @@ export default {
   methods: {
     getData: function() {
       this.$http
-        .get("https://cnodejs.org/api/v1/user/" + this.$route.params.id, {
+        .get("https://cnodejs.org/api/v1/user/" + (this.userdata || this.$route.params.id), {
           params: {}
         })
         .then(it => {
@@ -76,8 +77,6 @@ export default {
 
 <style scoped>
 .user {
-  width: 960px;
-  margin: 0 auto;
   border-radius: 4px;
 }
 .user a {
@@ -122,6 +121,9 @@ export default {
 .participate .participate-bd li {
   border-bottom: 1px solid #ddd;
   padding: 5px 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .new-topic .new-topic-bd li:last-child,
 .participate .participate-bd li:last-child {

@@ -64,8 +64,6 @@ export default {
 
 <style scoped>
 .main .main-wrapper {
-  width: 960px;
-  margin: 0 auto;
   background: #fff;
   border-radius: 4px;
 }

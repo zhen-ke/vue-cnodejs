@@ -2,10 +2,10 @@
   <div class="header">
     <div class="header-wrapper">
       <h1 class="title">
-        <a href="/">
+        <router-link :to="{name: 'main'}">
           <img src="./../assets/logo.png">
           <span>cNodeJS</span>
-        </a>
+        </router-link>
       </h1>
       <p class="about">关于</p>
     </div>
@@ -23,7 +23,7 @@ export default {
   margin-bottom: 35px;
 }
 .header .header-wrapper {
-  width: 960px;
+  width: 1100px;
   margin: 0 auto;
   overflow: hidden;
 }
