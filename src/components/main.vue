@@ -6,15 +6,15 @@
         <li class="item" @click="tabs('good')">精华</li>
         <li class="item" @click="tabs('share')">分享</li>
         <li class="item" @click="tabs('ask')">问答</li>
-        <li class="item"  @click="tabs('job')">招聘</li>
-        <li class="item"  @click="tabs('dev')">客户端测试</li>
+        <li class="item" @click="tabs('job')">招聘</li>
+        <li class="item" @click="tabs('dev')">客户端测试</li>        
       </ul>
       <ul class="list">
         <li v-for="(item,index) in content" :key="index" class="item">
           <div class="item-hd">
             <router-link :to="{ name: 'user', params: {id: item.author.loginname} }" class="user">
               <img :src="item.author.avatar_url">
-            </router-link>
+            </router-link> 
           </div>
           <div class="item-bd">
             <router-link :to="{ name: 'detail', params: {id: item.id} }" class="title">{{item.title}}</router-link>
@@ -26,7 +26,7 @@
             <p :class="{top: item.top}" v-if="item.top">置顶</p>
           </div>
         </li>
-      </ul>
+      </ul>  
     </div>
     <p class="pagination">
       <!-- <a class="button" @click="prev" >GO PREV</a>
@@ -44,7 +44,8 @@ export default {
     return {
       content: [],
       page: 1,
-      tab: 'all'
+      tab: 'all',
+      show: true
     };
   },
   methods: {
@@ -119,6 +120,10 @@ export default {
     },
     tab(newVal, oldVal) {
       this.getData(this.page, newVal)
+    },
+    $route(to, from) {
+      // this.getData(to.params.id)
+      this.getData(this.page, to.params.id)
     }
   },
   components: {

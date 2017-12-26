@@ -11,27 +11,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'main',
-      components: {
-        main: main
-      },
-      children: [{
-        path: 'tag/:id'
-      }]
+      name: 'home',
+      component: main,
+      children: [
+        {
+          path: '/tag/:id',
+        }
+      ]
     },
     {
       path: '/topic/:id',
       name: 'detail',
-      components: {
-        main: detail
-      },
+      component: detail
     },
     {
       path: '/user/:id',
       name: 'user',
-      components: {
-        main: user
-      },
+      component: user
     },
   ]
 })

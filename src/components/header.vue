@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-wrapper">
       <h1 class="title">
-        <router-link :to="{ name: 'main',  params: {id: 'all'} }">
+        <router-link to="/tag/all">
           <img src="./../assets/logo.png">
           <span>cNodeJS</span>
         </router-link>
