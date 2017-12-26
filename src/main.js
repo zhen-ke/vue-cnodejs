@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // 重置浏览器样式
 import reset from './assets/css/reset.css'
-import github from'./assets/css/github.css'
+import github from './assets/css/github.css'
 
 Vue.prototype.$http = axios
 

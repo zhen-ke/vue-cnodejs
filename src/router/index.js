@@ -14,7 +14,10 @@ export default new Router({
       name: 'main',
       components: {
         main: main
-      }
+      },
+      children: [{
+        path: 'tag/:id'
+      }]
     },
     {
       path: '/topic/:id',

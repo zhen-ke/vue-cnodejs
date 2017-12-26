@@ -1,12 +1,20 @@
 <template>
   <div class="main">
     <div class="main-wrapper">
+      <ul class="tab-list">
+        <li class="item" @click="tabs('all')">全部</li>
+        <li class="item" @click="tabs('good')">精华</li>
+        <li class="item" @click="tabs('share')">分享</li>
+        <li class="item" @click="tabs('ask')">问答</li>
+        <li class="item"  @click="tabs('job')">招聘</li>
+        <li class="item"  @click="tabs('dev')">客户端测试</li>
+      </ul>
       <ul class="list">
         <li v-for="(item,index) in content" :key="index" class="item">
           <div class="item-hd">
             <router-link :to="{ name: 'user', params: {id: item.author.loginname} }" class="user">
               <img :src="item.author.avatar_url">
-            </router-link> 
+            </router-link>
           </div>
           <div class="item-bd">
             <router-link :to="{ name: 'detail', params: {id: item.id} }" class="title">{{item.title}}</router-link>
@@ -18,24 +26,36 @@
             <p :class="{top: item.top}" v-if="item.top">置顶</p>
           </div>
         </li>
-      </ul>  
+      </ul>
     </div>
     <p class="pagination">
-      <a class="button" @click="prev" >GO PREV</a>
-      <a class="button" @click="next" >GO NEXT</a>
+      <!-- <a class="button" @click="prev" >GO PREV</a>
+      <a class="button" @click="next" >GO NEXT</a> -->
+      <v-tab v-on:changePage="test"></v-tab>
     </p>
   </div>
 </template>
 
 <script>
+import vTab from "./tab";
+
 export default {
   data: function() {
     return {
       content: [],
-      page: 1
+      page: 1,
+      tab: 'all'
     };
   },
   methods: {
+    test(page) {
+      // console.log('page:' + page)
+      this.page = page
+    },
+    tabs(data) {
+      this.tab = data
+      this.$router.push({ path: `/tag/${data}` })
+    },
     prev() {
       if(this.page > 1) {
         return this.page--
@@ -44,18 +64,18 @@ export default {
     next() {
       return this.page++
     },
-    getData: function(page) {
+    getData: function(page,tab) {
       this.$http
         .get("https://cnodejs.org/api/v1/topics", {
           params: {
             page: page,
             limit: 0,
+            tab: tab,
             mdrender: true
           }
         })
         .then(it => {
           this.content = it.data.data
-          console.log(this.content);
         })
         .catch(it => {
           console.log("main.vue:", it);
@@ -96,12 +116,28 @@ export default {
   watch: {
     page(val) {
       this.getData(val)
+    },
+    tab(newVal, oldVal) {
+      this.getData(this.page, newVal)
     }
+  },
+  components: {
+    vTab
   }
 };
 </script>
 
 <style scoped>
+.tab-list {
+  overflow: hidden;
+  padding: 10px 15px;
+  background: #f6f6f6;
+  border-radius: 4px 4px 0 0;
+}
+.tab-list .item {
+  float: left;
+  margin-right: 15px;
+}
 .button {
   display: inline-block;
   background: #212121;
@@ -150,8 +186,6 @@ export default {
 }
 .main .main-wrapper .list .item .item-bd .footer {
   color: #8492a6;
-}
-.main .main-wrapper .list .item .item-bd .footer .authour {
 }
 .main .main-wrapper .list .item .item-bd .footer .reply {
   display: inline-block;
